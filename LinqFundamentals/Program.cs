@@ -17,9 +17,8 @@ namespace LinqFundamentals
 
         private static void ShowLargeFilesWithLinq(string path)
         {
-            var query = from file in new DirectoryInfo(path).GetFiles()
-                orderby file.Length descending
-                select file;
+            var query = new DirectoryInfo(path).GetFiles()
+                .OrderByDescending(f => f.Length).Take(5);
             foreach (var fileInfo in query.Take(5))
             {
                 Console.WriteLine($"{fileInfo.Name,-20} _ {fileInfo.Length,10:N}");
