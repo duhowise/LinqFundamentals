@@ -12,6 +12,20 @@ namespace LinqFundamentals
             Console.WriteLine("Hello World!");
             string path=@"c:\windows";
             ShowLargeFilesWithoutLinq(path);
+            ShowLargeFilesWithLinq(path);
+        }
+
+        private static void ShowLargeFilesWithLinq(string path)
+        {
+            var query = from file in new DirectoryInfo(path).GetFiles()
+                orderby file.Length descending
+                select file;
+            foreach (var fileInfo in query.Take(5))
+            {
+                Console.WriteLine($"{fileInfo.Name,-20} _ {fileInfo.Length,10:N}");
+
+            }
+
         }
 
         private static void ShowLargeFilesWithoutLinq(string path)
